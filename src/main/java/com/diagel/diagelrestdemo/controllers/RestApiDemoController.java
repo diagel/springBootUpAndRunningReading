@@ -1,4 +1,4 @@
-package com.diagel.diagelrestdemo;
+package com.diagel.diagelrestdemo.controllers;
 
 import com.diagel.diagelrestdemo.repositories.DeliveryRepository;
 import com.diagel.diagelrestdemo.resources.Delivery;
@@ -17,16 +17,8 @@ public class RestApiDemoController {
 
     public RestApiDemoController(DeliveryRepository repository) {
         this.repository = repository;
-
-        this.repository.saveAll(List.of(
-                new Delivery("32154654"),
-                new Delivery("54878998"),
-                new Delivery("65465879"),
-                new Delivery("32154688"),
-                new Delivery("95548887"),
-                new Delivery("32154654")
-        ));
     }
+
 
     /**
      * GET
@@ -63,9 +55,9 @@ public class RestApiDemoController {
     ResponseEntity<Delivery> putDelivery(@PathVariable String id,
                                          @RequestBody Delivery delivery) {
 
-        return (!repository.existsById(id))
-                ? new ResponseEntity<>(repository.save(delivery), HttpStatus.CREATED)
-                : new ResponseEntity<>(repository.save(delivery), HttpStatus.OK);
+        return (repository.existsById(id))
+                ? new ResponseEntity<>(repository.save(delivery), HttpStatus.OK)
+                : new ResponseEntity<>(repository.save(delivery), HttpStatus.CREATED);
     }
 
     /**
